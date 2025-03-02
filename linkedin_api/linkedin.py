@@ -530,6 +530,7 @@ class Linkedin(object):
         job_title: Optional[List[str]] = None,
         industries: Optional[List[str]] = None,
         location_name: Optional[str] = None,
+        location_geo_id: Optional[str] = None,
         remote: Optional[List[Union[Literal["1"], Literal["2"], Literal["3"]]]] = None,
         listed_at=24 * 60 * 60,
         distance: Optional[int] = None,
@@ -577,6 +578,8 @@ class Linkedin(object):
             query["keywords"] = "KEYWORD_PLACEHOLDER"
         if location_name:
             query["locationFallback"] = "LOCATION_PLACEHOLDER"
+        if location_geo_id:
+            query["locationUnion"] = f"(geoId:{location_geo_id})"
 
         # In selectedFilters()
         query["selectedFilters"] = {}
@@ -603,6 +606,7 @@ class Linkedin(object):
         #    origin:JOB_SEARCH_PAGE_QUERY_EXPANSION,
         #    keywords:marketing%20manager,
         #    locationFallback:germany,
+        #    locationUnion:(geoId:90009706),
         #    selectedFilters:(
         #        distance:List(25),
         #        company:List(163253),
